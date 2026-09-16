@@ -1,0 +1,233 @@
+/* ===================================================================
+   HOME.CSS — específico da página inicial (index.html)
+   =================================================================== */
+
+/* ---------- header / hero ---------- */
+.header {
+  position: relative;
+  isolation: isolate;
+  min-height: min(96svh, 1200px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.header__nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  padding: 2.8rem clamp(1.25rem, 5vw, 4rem);
+}
+.header__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url("../assets/img/hero.jpg");
+  background-size: cover;
+  background-position: 62% 45%;
+}
+@media (max-width: 700px) {
+  .header__bg {
+    background-image: url("../assets/img/hero-mobile.jpg");
+    background-position: 70% 40%;
+  }
+}
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(26, 19, 11, 0.92) 0%,
+    rgba(26, 19, 11, 0.78) 40%,
+    rgba(26, 19, 11, 0.4) 74%,
+    rgba(26, 19, 11, 0.55) 100%
+  );
+}
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  mix-blend-mode: multiply;
+  background: linear-gradient(180deg, rgba(26, 19, 11, 0.82) 0%, rgba(26, 19, 11, 0) 26%),
+              linear-gradient(0deg, rgba(74, 82, 51, 0.3), rgba(74, 82, 51, 0.3));
+}
+@media (max-width: 700px) {
+  .header::before {
+    background: linear-gradient(180deg, rgba(26,19,11,.55) 0%, rgba(26,19,11,.35) 40%, rgba(26,19,11,.94) 100%);
+  }
+}
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(7rem, 16vh, 10rem) clamp(3rem, 9vh, 5rem);
+  max-width: 62ch;
+}
+.hero__inner h1 {
+  font-size: clamp(2.3rem, 6vw, 4.2rem);
+  font-weight: 700;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+.hero__inner h1 em {
+  font-style: normal;
+  color: var(--oliva-claro);
+}
+.hero__inner p {
+  margin-top: 1.4rem;
+  max-width: 44ch;
+  color: var(--areia);
+  opacity: 0.92;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2.3rem;
+}
+
+/* ---------- sobre nós ---------- */
+.sobre {
+  padding-block: clamp(4rem, 10vw, 6.5rem);
+}
+.sobre__topo {
+  max-width: 58ch;
+  margin-bottom: clamp(2.2rem, 5vw, 3.2rem);
+}
+.sobre__topo p {
+  margin-top: 1rem;
+  color: var(--texto-suave);
+}
+.sobre__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.4rem;
+}
+.sobre__card {
+  border: 1px solid var(--linha);
+  border-radius: 3px;
+  padding: 1.8rem 1.6rem;
+  background: var(--nogueira);
+}
+.sobre__card .numero {
+  font-family: "Fraunces", serif;
+  font-size: 1rem;
+  color: var(--cobre);
+  letter-spacing: 0.06em;
+}
+.sobre__card h3 {
+  font-size: 1.3rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.sobre__card p {
+  font-size: 1rem;
+  color: var(--texto-suave);
+}
+
+/* ---------- showcase (ilustração + texto) ---------- */
+.showcase {
+  padding-block: clamp(4rem, 9vw, 6.5rem);
+}
+.showcase .wrap {
+  display: grid;
+  grid-template-columns: minmax(600px, 1fr) minmax(260px, 1fr);
+  gap: clamp(7.5rem, 6vw, 5rem);
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .showcase .wrap { grid-template-columns: 1fr; }
+}
+.showcase__guarda-roupa {
+  color: var(--areia);
+  opacity: 0.85;
+}
+.showcase__guarda-roupa img {
+  width: 150%;
+  height: auto;
+  max-width: 700px;
+}
+.showcase__texto p {
+  margin-top: 1rem;
+  color: var(--texto-suave);
+  max-width: 42ch;
+
+}
+
+/* ---------- prévia de portfólio ---------- */
+.portfolio-preview {
+  padding-block: clamp(4rem, 10vw, 6.5rem);
+}
+.portfolio-preview__topo {
+  max-width: 56ch;
+  margin-bottom: clamp(2.2rem, 5vw, 3.2rem);
+}
+.grid-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.3rem;
+  margin-bottom: 2rem;
+}
+.peca {
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.3rem;
+  color: var(--creme);
+}
+.peca::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(24, 17, 9, 0.75), transparent 55%);
+}
+.peca__conteudo { position: relative; z-index: 1; }
+.peca__cat {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.peca__nome {
+  font-family: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+}
+.cor-cozinha,
+.cor-quarto,
+.cor-sala,
+.cor-escritorio,
+.cor-painel {
+  background: linear-gradient(165deg, #5C6B3E, #3E4A2A);
+}
+
+/* ---------- cta de contato ---------- */
+.cta-contato {
+  background: var(--nogueira);
+  padding-block: clamp(4rem, 9vw, 6rem);
+  border-top: 1px solid var(--linha);
+}
+.cta-contato .wrap {
+  max-width: 1220px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.cta-contato p {
+  margin: 1rem 0 1.8rem;
+  color: var(--texto-suave);
+  max-width: 56ch;
+}
+@media (max-width: 700px) {
+  .cta-contato .wrap {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

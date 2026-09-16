@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcenaria Pai &amp; Filho — Portfólio completo</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/portfolio.css">
+</head>
+<body class="portfolio-page">
+
+<header class="topo">
+  <div class="wrap">
+    <nav class="nav">
+      <div class="nav__logo">MARCENARIA PAI &amp; FILHO<span>MÓVEIS SOB MEDIDA</span></div>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#sobre">Sobre Nós</a></li>
+        <li><a href="portfolio.html" class="ativo">Portfólio</a></li>
+        <li><a href="contato.html">Orçamento</a></li>
+      </ul>
+    </nav>
+    <span class="eyebrow" data-reveal style="--reveal-delay: 0s">Portfólio Completo</span>
+    <h1 data-reveal style="--reveal-delay: .12s">Cada peça daqui foi feita sob medida para um espaço específico.</h1>
+    <p data-reveal style="--reveal-delay: .24s">Filtre por ambiente pra ver projetos parecidos com o que você tem em mente. Clique numa peça pra ver mais detalhes.</p>
+  </div>
+</header>
+
+<div class="filtros">
+  <div class="wrap">
+    <div class="filtros__lista" id="filtros">
+      <button class="chip ativo" data-filtro="todos">Todos</button>
+      <button class="chip" data-filtro="cozinha">Cozinhas</button>
+      <button class="chip" data-filtro="quarto">Quartos</button>
+      <button class="chip" data-filtro="escritorio">Escritórios</button>
+      <button class="chip" data-filtro="painel">Painéis</button>
+    </div>
+    <div class="filtros__contagem" id="contagem"></div>
+  </div>
+</div>
+
+<section class="secao-grid">
+  <div class="wrap">
+    <div class="grid-port" id="grid"></div>
+    <div class="vazio" id="vazio">Nenhuma peça encontrada nessa categoria ainda</div>
+  </div>
+</section>
+
+<div class="modal-fundo" id="modal-fundo">
+  <div class="modal">
+    <div class="modal__topo" id="modal-topo">
+      <button class="modal__fechar" id="modal-fechar">✕</button>
+      <div class="modal__topo-conteudo">
+        <div class="peca__cat" id="modal-cat"></div>
+        <h3 id="modal-nome"></h3>
+      </div>
+    </div>
+    <div class="modal__corpo">
+      <p id="modal-desc"></p>
+      <a class="btn btn--primary" href="contato.html" style="margin-top:1.4rem;">Quero um projeto parecido</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>© 2026 Marcenaria Pai &amp; Filho</span>
+    <ul class="footer__links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="index.html#sobre">sobre nós</a></li>
+      <li><a href="portfolio.html">portfólio</a></li>
+      <li><a href="contato.html">contato</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/animacoes.js"></script>
+<script src="js/portfolio.js"></script>
+</body>
+</html>
