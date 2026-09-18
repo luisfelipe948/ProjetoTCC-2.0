@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Marcenaria Pai &amp; Filho</string>
+    <string name="title_activity_main">Marcenaria Pai &amp; Filho</string>
+    <string name="package_name">com.marcenariapaiefilho.app</string>
+    <string name="custom_url_scheme">com.marcenariapaiefilho.app</string>
+</resources>
