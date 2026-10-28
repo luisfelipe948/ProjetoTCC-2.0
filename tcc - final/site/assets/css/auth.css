@@ -1,0 +1,330 @@
+/* ===================================================================
+   AUTH.CSS — login, cadastro, menu da conta e página de perfil
+   Usa as mesmas variáveis do base.css (preto-café, nogueira, oliva...).
+   =================================================================== */
+
+/* o atributo hidden precisa vencer qualquer display definido nas classes */
+[hidden] { display: none !important; }
+
+/* a logo é um link para a Home: mantém o visual de antes */
+a.nav__logo { display: block; text-decoration: none; color: var(--creme); cursor: pointer; }
+
+/* ---------- topo: botão "Entrar" / menu da conta ---------- */
+.nav__direita {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+}
+.conta { position: relative; flex: none; }
+
+.conta__entrar {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.2rem;
+  border: 1.5px solid rgba(232, 220, 200, 0.45);
+  border-radius: 3px;
+  color: var(--areia);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+}
+.conta__entrar:hover { background: rgba(232, 220, 200, 0.1); border-color: var(--areia); }
+
+.conta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 1rem 0.25rem 0.3rem;
+  background: transparent;
+  border: 1.5px solid rgba(232, 220, 200, 0.3);
+  border-radius: 999px;
+  color: var(--areia);
+  font: inherit;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.conta__btn:hover { background: rgba(232, 220, 200, 0.08); border-color: var(--areia); }
+
+.conta__avatar {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--oliva);
+  color: var(--creme);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  overflow: hidden;
+}
+.conta__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.conta__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.6rem);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  background: var(--nogueira);
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+.conta__menu[hidden] { display: none; }
+.conta__menu a,
+.conta__sair {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--areia);
+  font: inherit;
+  font-size: 0.98rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.conta__menu a:hover,
+.conta__sair:hover { background: rgba(232, 220, 200, 0.09); }
+.conta__sair { color: var(--erro); }
+
+/* páginas de duas colunas (orçamento e perfil): o botão fica no canto da coluna da direita */
+.form-coluna,
+.perfil-coluna { position: relative; padding-top: 5.5rem; }
+.conta--canto {
+  position: absolute;
+  top: clamp(1.2rem, 3vw, 2rem);
+  right: clamp(1.2rem, 4vw, 2.5rem);
+  z-index: 5;
+}
+@media (max-width: 880px) {
+  .form-coluna,
+  .perfil-coluna { flex-direction: column; align-items: center; }
+  .conta--canto { position: static; align-self: flex-end; margin-bottom: 1.6rem; }
+}
+
+@media (max-width: 520px) {
+  .conta__nome { display: none; }
+  .conta__btn { padding-right: 0.3rem; }
+}
+
+/* ---------- painel de login / cadastro ---------- */
+.auth { width: 100%; max-width: 520px; }
+.auth[hidden], [hidden].estado { display: none; }
+
+.carregando {
+  color: var(--texto-suave);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.auth-abas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  margin-bottom: 1.8rem;
+  background: var(--nogueira);
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+}
+.auth-aba {
+  padding: 0.7rem 0.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.auth-aba:hover { color: var(--areia); }
+.auth-aba[aria-selected="true"] { background: var(--oliva); color: var(--creme); }
+
+.auth h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.auth__sub { margin: 0.6rem 0 1.8rem; color: var(--texto-suave); font-size: 1.06rem; }
+
+.btn-social {
+  width: 100%;
+  gap: 0.8rem;
+  border-radius: 6px;
+  border-color: rgba(232, 220, 200, 0.3);
+  color: var(--texto);
+  background: var(--nogueira);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn-social:hover { background: rgba(232, 220, 200, 0.08); border-color: var(--areia); }
+.btn-social svg { width: 20px; height: 20px; flex: none; }
+.auth__sociais { display: grid; gap: 0.7rem; }
+
+.divisor-ou {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  color: var(--texto-suave);
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.divisor-ou::before,
+.divisor-ou::after { content: ""; flex: 1; height: 1px; background: var(--linha); }
+
+.auth .btn--primary,
+.perfil-cartao .btn { border-radius: 6px; }
+
+.link-sutil {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--areia);
+  font: inherit;
+  font-size: 0.92rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link-sutil:hover { color: var(--creme); }
+.auth__rodape { margin-top: 1.1rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+.btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+.aviso {
+  margin-bottom: 1.2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid;
+  border-left-width: 3px;
+  border-radius: 3px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.aviso[hidden] { display: none; }
+.aviso--erro { color: var(--erro); background: rgba(201, 122, 99, 0.1); border-color: rgba(201, 122, 99, 0.4); }
+.aviso--ok { color: var(--areia); background: rgba(107, 116, 72, 0.18); border-color: var(--oliva-claro); }
+.aviso--info { color: var(--areia); background: rgba(180, 113, 60, 0.1); border-color: rgba(180, 113, 60, 0.5); }
+
+/* ---------- "logado como..." acima do formulário ---------- */
+.logado {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.8rem;
+  padding: 0.85rem 1rem;
+  background: var(--nogueira);
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+}
+.logado .link-sutil { text-decoration-thickness: 1px; }
+.logado__txt { flex: 1; min-width: 0; line-height: 1.35; }
+.logado__txt strong { display: block; color: var(--areia); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logado__txt span { display: block; color: var(--texto-suave); font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logado .conta__avatar { width: 40px; height: 40px; font-size: 1.1rem; }
+.check { display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem; color: var(--texto-suave); }
+.check input { width: 1.05rem; height: 1.05rem; accent-color: var(--oliva-claro); }
+
+/* ---------- página de perfil ---------- */
+.perfil-lateral__avatar {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 1.4rem;
+  border-radius: 50%;
+  background: var(--oliva);
+  color: var(--creme);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-spoof);
+  font-size: 2.2rem;
+  overflow: hidden;
+  border: 2px solid rgba(232, 220, 200, 0.3);
+}
+.perfil-lateral__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.perfil-lateral__email { margin-top: 0.8rem; color: var(--texto-suave); word-break: break-all; }
+.perfil-lateral__prov {
+  display: inline-block;
+  margin-top: 1.1rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(232, 220, 200, 0.3);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--areia);
+}
+
+.perfil-coluna {
+  display: flex;
+  justify-content: center;
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
+  background: var(--preto-cafe);
+}
+.perfil-wrap { width: 100%; max-width: 520px; display: grid; gap: 1.4rem; align-content: start; }
+.perfil-topo h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.perfil-topo p { margin-top: 0.6rem; color: var(--texto-suave); }
+
+.perfil-cartao {
+  padding: 1.6rem;
+  background: var(--nogueira);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+}
+.perfil-cartao h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+.perfil-cartao > p { color: var(--texto-suave); font-size: 0.98rem; margin-bottom: 1.2rem; }
+.perfil-cartao .campo input { background: var(--preto-cafe); }
+.perfil-cartao .campo input[readonly] { opacity: 0.65; cursor: not-allowed; }
+.perfil-cartao form { max-width: none; }
+.perfil-cartao .linha:last-of-type { margin-bottom: 1.4rem; }
+.perfil-cartao--perigo { border-color: rgba(201, 122, 99, 0.45); }
+.perfil-acoes { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+.btn--perigo { border-color: rgba(201, 122, 99, 0.6); color: var(--erro); background: transparent; }
+.btn--perigo:hover { background: rgba(201, 122, 99, 0.14); border-color: var(--erro); }
+.btn--perigo-cheio { background: #A8553F; color: var(--creme); }
+.btn--perigo-cheio:hover { background: #BE634A; }
+
+/* ---------- janela de confirmação ---------- */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: min(92vw, 440px);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: 0;
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  background: var(--nogueira);
+  color: var(--texto);
+}
+.modal::backdrop { background: rgba(10, 7, 4, 0.72); }
+.modal__corpo { padding: 1.8rem; }
+.modal h3 { font-size: 1.35rem; }
+.modal p { margin: 0.8rem 0 1.2rem; color: var(--texto-suave); }
+.modal .campo input { background: var(--preto-cafe); }
+.modal__acoes { display: flex; justify-content: flex-end; gap: 0.7rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.modal .btn { border-radius: 6px; padding: 0.8rem 1.4rem; }
+
+@media (max-width: 880px) {
+  .perfil-coluna { padding-top: 2rem; }
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcenaria Pai &amp; Filho — Solicitar orçamento</title>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="modulepreload" href="assets/js/firebase-config.js">
+<link rel="modulepreload" href="assets/js/auth.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/contato.css">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<header class="contato-header">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="nav__logo" href="index.html" aria-label="Marcenaria Pai &amp; Filho — voltar para a Home">MARCENARIA PAI &amp; FILHO<span>MÓVEIS SOB MEDIDA</span></a>
+      <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#sobre">Sobre Nós</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="contato.html" class="ativo">Orçamento</a></li>
+        </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="pagina">
+
+  <aside class="lateral">
+    <div class="lateral__corpo" data-reveal>
+      <span class="eyebrow">Solicitar Orçamento</span>
+      <h1>Conte o que você tem em mente!</h1>
+      <p>Entre na sua conta e descreva o projeto com o máximo de detalhe que puder. Isso já ajuda a gente a chegar na visita técnica com uma ideia melhor do que você precisa.</p>
+
+      <ul class="lateral__lista">
+        <li data-reveal style="--reveal-delay: .12s"><span class="num">1</span> Entre com e-mail e senha, Google ou Facebook.</li>
+        <li data-reveal style="--reveal-delay: .2s"><span class="num">2</span> Conte o que você precisa e envie pelo WhatsApp.</li>
+        <li data-reveal style="--reveal-delay: .28s"><span class="num">3</span> Respondemos em até 1 dia útil e marcamos uma visita técnica gratuita.</li>
+      </ul>
+    </div>
+
+    <div class="lateral__contato" data-reveal style="--reveal-delay: .36s">
+      <span>Prefere falar direto?</span>
+      <a href="https://wa.me/5511910538560" target="_blank" rel="noopener">(11) 91053-8560 — WhatsApp</a>
+    </div>
+  </aside>
+
+  <div class="form-coluna">
+    <div class="conta conta--canto" data-conta></div>
+    <div id="form-wrap">
+
+      <!-- 0) enquanto o login é verificado -->
+      <p class="carregando estado" id="estado-carregando">Carregando…</p>
+
+      <!-- 1) visitante: entrar ou criar conta -->
+      <section class="auth estado" id="painel-auth" hidden>
+        <div class="auth-abas" role="tablist" aria-label="Entrar ou criar conta">
+          <button type="button" class="auth-aba" role="tab" id="aba-entrar" data-aba="entrar" aria-selected="true">Entrar</button>
+          <button type="button" class="auth-aba" role="tab" id="aba-criar" data-aba="criar" aria-selected="false">Criar conta</button>
+        </div>
+
+        <div class="aviso aviso--info" id="aviso-config" hidden>
+          O login ainda não foi configurado neste site. Siga o passo a passo do arquivo <strong>LEIA-ME-LOGIN.md</strong> e cole as chaves em <strong>assets/js/firebase-config.js</strong>.
+        </div>
+
+        <h2 id="auth-titulo">Entrar na sua conta</h2>
+        <p class="auth__sub" id="auth-sub">Use o e-mail e a senha que você cadastrou.</p>
+
+        <div class="aviso aviso--erro" id="auth-erro" role="alert" hidden></div>
+        <div class="aviso aviso--ok" id="auth-ok" role="status" hidden></div>
+
+        <form id="form-auth" novalidate>
+          <div class="linha" id="linha-nome" hidden>
+            <div class="campo" data-campo="nome">
+              <label for="auth-nome">Nome *</label>
+              <input type="text" id="auth-nome" name="nome" autocomplete="name">
+              <span class="msg-erro">Preencha seu nome.</span>
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo" data-campo="email">
+              <label for="auth-email">E-mail *</label>
+              <input type="email" id="auth-email" name="email" autocomplete="email" required>
+              <span class="msg-erro">Informe um e-mail válido.</span>
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo" data-campo="senha">
+              <label for="auth-senha">Senha *</label>
+              <input type="password" id="auth-senha" name="senha" autocomplete="current-password" required>
+              <span class="msg-erro" id="msg-senha">Digite a sua senha.</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--primary" id="btn-auth" style="width:100%;">Entrar</button>
+          <div class="auth__rodape">
+            <button type="button" class="link-sutil" id="btn-esqueci">Esqueci minha senha</button>
+          </div>
+        </form>
+
+        <div class="divisor-ou">ou</div>
+
+        <div class="auth__sociais">
+          <button type="button" class="btn btn-social" id="btn-google">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Continuar com Google
+          </button>
+          <button type="button" class="btn btn-social" id="btn-facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.97.93-1.97 1.89v2.26h3.34l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg>
+            Continuar com Facebook
+          </button>
+        </div>
+      </section>
+
+      <!-- 2) logado: o formulário de orçamento -->
+      <form id="form-orcamento" class="estado" hidden novalidate>
+        <div class="logado">
+          <span class="conta__avatar" id="logado-avatar"></span>
+          <div class="logado__txt">
+            <strong id="logado-nome"></strong>
+            <span id="logado-email"></span>
+          </div>
+          <a class="link-sutil" href="perfil.html">Perfil</a>
+          <button type="button" class="link-sutil" id="btn-sair-form">Sair</button>
+        </div>
+
+        <div class="form-topo">
+          <h2 id="form-ola">Solicitar Orçamento</h2>
+          <p>Campos com * são obrigatórios.</p>
+        </div>
+
+        <div class="linha">
+          <div class="campo" data-campo="telefone">
+            <label for="telefone">Telefone *</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" autocomplete="tel" required>
+            <span class="msg-erro">Informe um telefone válido.</span>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="campo" data-campo="ambiente">
+            <label for="ambiente">Ambiente *</label>
+            <select id="ambiente" name="ambiente" required>
+              <option value="">Selecione…</option>
+              <option>Cozinha</option>
+              <option>Quarto</option>
+              <option>Sala</option>
+              <option>Escritório</option>
+              <option>Painel</option>
+              <option>Outro</option>
+            </select>
+            <span class="msg-erro">Escolha o ambiente.</span>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="campo" data-campo="descricao">
+            <label for="descricao">O que você precisa? *</label>
+            <textarea id="descricao" name="descricao" placeholder="Conte o tipo de móvel, medidas aproximadas e qualquer referência que tenha em mente." required></textarea>
+            <span class="msg-erro">Descreva um pouco o seu projeto.</span>
+          </div>
+        </div>
+
+        <div class="linha">
+          <label class="check"><input type="checkbox" id="salvar-telefone" checked> Guardar este telefone no meu perfil</label>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn--primary" style="width:100%;">Enviar pelo WhatsApp</button>
+          <p class="nota-lgpd">Ao enviar, abrimos o WhatsApp com sua solicitação já escrita — é só conferir e mandar por lá.</p>
+        </div>
+      </form>
+
+      <!-- 3) depois de enviar -->
+      <div class="confirmacao" id="confirmacao">
+        <div class="confirmacao__icone">✓</div>
+        <h2>Quase lá!</h2>
+        <p>Abrimos o WhatsApp em outra aba com sua mensagem pronta. Confira o texto e toque em enviar por lá para concluir.</p>
+        <p class="confirmacao__reabrir">
+          Não abriu nada? <a href="#" id="link-whatsapp-de-novo" target="_blank" rel="noopener">Toque aqui para abrir o WhatsApp</a>.
+        </p>
+        <button class="btn" id="btn-novo">Enviar outra solicitação</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/js/animacoes.js"></script>
+<script type="module" src="assets/js/nav-auth.js"></script>
+<script type="module" src="assets/js/contato.js"></script>
+</body>
+</html>

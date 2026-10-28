@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcenaria Pai &amp; Filho — Meu perfil</title>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="modulepreload" href="assets/js/firebase-config.js">
+<link rel="modulepreload" href="assets/js/auth.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/contato.css">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<header class="contato-header">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="nav__logo" href="index.html" aria-label="Marcenaria Pai &amp; Filho — voltar para a Home">MARCENARIA PAI &amp; FILHO<span>MÓVEIS SOB MEDIDA</span></a>
+      <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#sobre">Sobre Nós</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="contato.html">Orçamento</a></li>
+        </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="pagina">
+
+  <aside class="lateral">
+    <div class="lateral__corpo">
+      <span class="eyebrow">Minha conta</span>
+      <div class="perfil-lateral__avatar" id="perfil-avatar"></div>
+      <h1 id="perfil-nome">…</h1>
+      <p class="perfil-lateral__email" id="perfil-email"></p>
+      <span class="perfil-lateral__prov" id="perfil-prov" hidden></span>
+    </div>
+    <div class="lateral__contato">
+      <span>Precisa de um projeto novo?</span>
+      <a href="contato.html">Pedir orçamento</a>
+    </div>
+  </aside>
+
+  <div class="perfil-coluna">
+    <div class="conta conta--canto" data-conta></div>
+    <p class="carregando estado" id="estado-carregando" style="align-self:center;">Carregando…</p>
+
+    <div class="perfil-wrap" id="perfil-wrap" hidden>
+      <div class="perfil-topo">
+        <span class="eyebrow">Perfil</span>
+        <h2>Seus dados</h2>
+        <p>Atualize como você aparece e o telefone que usamos nos orçamentos.</p>
+      </div>
+
+      <div class="aviso aviso--erro" id="perfil-erro" role="alert" hidden></div>
+      <div class="aviso aviso--ok" id="perfil-ok" role="status" hidden></div>
+
+      <!-- editar perfil -->
+      <section class="perfil-cartao">
+        <h3>Editar perfil</h3>
+        <p>Seu e-mail é o que identifica a conta e não pode ser alterado aqui.</p>
+        <form id="form-perfil" novalidate>
+          <div class="linha">
+            <div class="campo" data-campo="nome">
+              <label for="p-nome">Nome *</label>
+              <input type="text" id="p-nome" name="nome" autocomplete="name" required>
+              <span class="msg-erro">Preencha seu nome.</span>
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo" data-campo="email">
+              <label for="p-email">E-mail</label>
+              <input type="email" id="p-email" readonly tabindex="-1">
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo" data-campo="telefone">
+              <label for="p-telefone">Telefone</label>
+              <input type="tel" id="p-telefone" name="telefone" placeholder="(11) 99999-9999" autocomplete="tel">
+              <span class="msg-erro">Informe um telefone válido ou deixe em branco.</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary" id="btn-salvar-perfil">Salvar alterações</button>
+        </form>
+      </section>
+
+      <!-- trocar senha (só para quem entra com e-mail e senha) -->
+      <section class="perfil-cartao" id="cartao-senha" hidden>
+        <h3>Trocar senha</h3>
+        <p>Por segurança, confirme a senha atual antes de definir a nova.</p>
+        <form id="form-senha" novalidate>
+          <div class="linha">
+            <div class="campo" data-campo="atual">
+              <label for="s-atual">Senha atual *</label>
+              <input type="password" id="s-atual" autocomplete="current-password">
+              <span class="msg-erro">Digite a senha atual.</span>
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo" data-campo="nova">
+              <label for="s-nova">Nova senha *</label>
+              <input type="password" id="s-nova" autocomplete="new-password">
+              <span class="msg-erro">A nova senha precisa ter pelo menos 6 caracteres.</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--ghost" id="btn-trocar-senha">Trocar senha</button>
+        </form>
+      </section>
+
+      <!-- sair e excluir -->
+      <section class="perfil-cartao">
+        <h3>Sessão</h3>
+        <p>Sair encerra o login neste aparelho. Você entra de novo quando quiser.</p>
+        <div class="perfil-acoes">
+          <button type="button" class="btn btn--ghost" id="btn-sair">Sair do perfil</button>
+        </div>
+      </section>
+
+      <section class="perfil-cartao perfil-cartao--perigo">
+        <h3>Excluir perfil</h3>
+        <p>Apaga a sua conta e os dados do perfil de forma definitiva. Não dá para desfazer.</p>
+        <div class="perfil-acoes">
+          <button type="button" class="btn btn--perigo" id="btn-excluir">Excluir meu perfil</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- confirmação de exclusão -->
+<dialog class="modal" id="modal-excluir" aria-labelledby="modal-titulo">
+  <form method="dialog" class="modal__corpo" id="form-excluir" novalidate>
+    <h3 id="modal-titulo">Excluir seu perfil?</h3>
+    <p>Essa ação é definitiva: sua conta e seus dados serão apagados. Os orçamentos já enviados pelo WhatsApp não são afetados.</p>
+    <div class="aviso aviso--erro" id="modal-erro" role="alert" hidden></div>
+    <div class="campo" data-campo="senha" id="campo-senha-excluir" hidden>
+      <label for="excluir-senha">Digite sua senha para confirmar</label>
+      <input type="password" id="excluir-senha" autocomplete="current-password">
+      <span class="msg-erro">Digite a sua senha.</span>
+    </div>
+    <p id="excluir-social" hidden>Para confirmar, vamos abrir uma janelinha do <span id="excluir-social-nome"></span> pedindo que você entre de novo.</p>
+    <div class="modal__acoes">
+      <button type="button" class="btn btn--ghost" id="excluir-cancelar">Cancelar</button>
+      <button type="submit" class="btn btn--perigo-cheio" id="excluir-confirmar">Excluir definitivamente</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="assets/js/animacoes.js"></script>
+<script type="module" src="assets/js/nav-auth.js"></script>
+<script type="module" src="assets/js/perfil.js"></script>
+</body>
+</html>
